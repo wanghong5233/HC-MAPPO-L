@@ -1,0 +1,88 @@
+{
+    "name": "ResNet18",
+    "input_size_KB": 588.0,
+    "total_params_KB": 43860.64453,
+    "total_MFLOP": 1818.605568,
+    "layers": [
+        {
+            "layer_name": "conv1",
+            "layer_type": "Conv2d",
+            "param_size": 36.75,
+            "feature_size": 3136,
+            "MFLOP": 118.013952,
+            "privacy": 1.0
+        },
+        {
+            "layer_name": "layer1_block0",
+            "layer_type": "BasicBlock",
+            "param_size": 289,
+            "feature_size": 784,
+            "MFLOP": 232.013824,
+            "privacy": 0.357195995
+        },
+        {
+            "layer_name": "layer1_block1",
+            "layer_type": "BasicBlock",
+            "param_size": 289,
+            "feature_size": 784,
+            "MFLOP": 232.013824,
+            "privacy": 0.098226983
+        },
+        {
+            "layer_name": "layer2_block0",
+            "layer_type": "BasicBlock",
+            "param_size": 899,
+            "feature_size": 392,
+            "MFLOP": 180.432896,
+            "privacy": 0.062740733
+        },
+        {
+            "layer_name": "layer2_block1",
+            "layer_type": "BasicBlock",
+            "param_size": 1154,
+            "feature_size": 392,
+            "MFLOP": 231.612416,
+            "privacy": 0.057299121
+        },
+        {
+            "layer_name": "layer3_block0",
+            "layer_type": "BasicBlock",
+            "param_size": 3590,
+            "feature_size": 196,
+            "MFLOP": 180.13184,
+            "privacy": 0.036705882
+        },
+        {
+            "layer_name": "layer3_block1",
+            "layer_type": "BasicBlock",
+            "param_size": 4612,
+            "feature_size": 196,
+            "MFLOP": 231.411712,
+            "privacy": 0.031553714
+        },
+        {
+            "layer_name": "layer4_block0",
+            "layer_type": "BasicBlock",
+            "param_size": 14348,
+            "feature_size": 98,
+            "MFLOP": 179.981312,
+            "privacy": 0.026872831
+        },
+        {
+            "layer_name": "layer4_block1",
+            "layer_type": "BasicBlock",
+            "param_size": 18440,
+            "feature_size": 98,
+            "MFLOP": 231.31136,
+            "privacy": 0.0
+        },
+        {
+            "layer_name": "fc",
+            "layer_type": "Linear",
+            "param_size": 202.3945313,
+            "feature_size": 0.39453125,
+            "MFLOP": 0.051712,
+            "privacy": 0.023228156
+        }
+    ]
+}

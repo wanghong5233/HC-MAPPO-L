@@ -1,0 +1,42 @@
+# Convergence experiment configuration
+experiment_name: "convergence"
+description: "Compare convergence and feasibility of different algorithms"
+
+# Experiment parameters
+# seeds: [0, 1, 2, 3, 9, 10, 13]  # 7 random seeds
+seeds: [0]  # 7 random seeds
+max_updates: 800  # Max training updates
+
+# Algorithm list
+algorithms:
+  # - "local_only"
+  # - "edge_only"
+  # - "random_policy"
+  # - "greedy_policy"
+  # - "h_mappo_l"
+  # - "mappo_no_constraint"
+  # - "ippo"
+  - "hc_ippo_l"
+  - "lru_avg"
+
+# Fixed parameters (unchanged)
+fixed_params:
+  env:
+    num_users: 100
+    num_edges: 10
+  framework:
+    latency_constraint_s: 3.0
+    deployment_update_interval: 10
+
+# Results collection configuration
+metrics:
+  - "success_rate"
+  - "avg_delay_s"
+  - "avg_constraint_violation"
+  - "avg_energy_j"
+  - "avg_privacy_leakage"
+  - "avg_user_reward"
+  - "avg_alloc_reward"
+  - "avg_deploy_reward"
+  - "lagrangian_multiplier"
+  - "deployment_coverage"

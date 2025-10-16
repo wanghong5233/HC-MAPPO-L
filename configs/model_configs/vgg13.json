@@ -1,0 +1,112 @@
+{
+    "name": "vgg13",
+    "input_size_KB": 588.0,
+    "total_params_KB": 505330.6445,
+    "total_MFLOP": 11304.78387,
+    "layers": [
+        {
+            "layer_name": "conv1_1",
+            "layer_type": "Conv2d",
+            "param_size": 7,
+            "feature_size": 12544,
+            "MFLOP": 86.704128,
+            "privacy": 1.0
+        },
+        {
+            "layer_name": "conv1_2",
+            "layer_type": "Conv2d",
+            "param_size": 144.25,
+            "feature_size": 12544,
+            "MFLOP": 1849.688064,
+            "privacy": 0.998206368
+        },
+        {
+            "layer_name": "conv2_1",
+            "layer_type": "Conv2d",
+            "param_size": 288.5,
+            "feature_size": 6272,
+            "MFLOP": 924.844032,
+            "privacy": 0.935591669
+        },
+        {
+            "layer_name": "conv2_2",
+            "layer_type": "Conv2d",
+            "param_size": 576.5,
+            "feature_size": 6272,
+            "MFLOP": 1849.688064,
+            "privacy": 0.899232598
+        },
+        {
+            "layer_name": "conv3_1",
+            "layer_type": "Conv2d",
+            "param_size": 1153,
+            "feature_size": 3136,
+            "MFLOP": 924.844032,
+            "privacy": 0.784201096
+        },
+        {
+            "layer_name": "conv3_2",
+            "layer_type": "Conv2d",
+            "param_size": 2305,
+            "feature_size": 3136,
+            "MFLOP": 1849.688064,
+            "privacy": 0.580814579
+        },
+        {
+            "layer_name": "conv4_1",
+            "layer_type": "Conv2d",
+            "param_size": 4610,
+            "feature_size": 1568,
+            "MFLOP": 924.844032,
+            "privacy": 0.273470319
+        },
+        {
+            "layer_name": "conv4_2",
+            "layer_type": "Conv2d",
+            "param_size": 9218,
+            "feature_size": 1568,
+            "MFLOP": 1849.688064,
+            "privacy": 0.1001675
+        },
+        {
+            "layer_name": "conv5_1",
+            "layer_type": "Conv2d",
+            "param_size": 9218,
+            "feature_size": 392,
+            "MFLOP": 462.422016,
+            "privacy": 0.054949943
+        },
+        {
+            "layer_name": "conv5_2",
+            "layer_type": "Conv2d",
+            "param_size": 9218,
+            "feature_size": 392,
+            "MFLOP": 462.422016,
+            "privacy": 0.0
+        },
+        {
+            "layer_name": "fc1",
+            "layer_type": "Linear",
+            "param_size": 401424,
+            "feature_size": 16,
+            "MFLOP": 102.760448,
+            "privacy": 0.061927991
+        },
+        {
+            "layer_name": "fc2",
+            "layer_type": "Linear",
+            "param_size": 65552,
+            "feature_size": 16,
+            "MFLOP": 16.777216,
+            "privacy": 0.061550223
+        },
+        {
+            "layer_name": "fc3",
+            "layer_type": "Linear",
+            "param_size": 1616.394531,
+            "feature_size": 0.4,
+            "MFLOP": 0.413696,
+            "privacy": 0.029060218
+        }
+    ]
+}

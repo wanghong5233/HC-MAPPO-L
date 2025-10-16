@@ -1,0 +1,137 @@
+# Sensitivity analysis experiment configuration
+experiment_name: "sensitivity"
+description: "Test the impact of key parameters on performance"
+
+# Experiment parameters
+# seeds: [0, 1, 10]  # 3 random seeds
+seeds: [0]  # 3 random seeds
+# max_updates: 100  # Fewer training iterations
+
+# Algorithm list (full comparison)
+algorithms:
+  # - "h_mappo_l"          # Proposed method in the paper (H-MAPPO-L)
+  - "local_only"          # Local execution baseline
+  - "edge_only"           # Edge execution baseline
+  - "greedy_policy"       # Greedy policy baseline
+  # - "mappo_no_constraint" # MAPPO no-constraint ablation
+  # - "ippo"                # IPPO baseline
+  # - "hc_ippo_l"           # HC-IPPO-L (no communication + Lagrangian constraint)
+  # - "lru_avg"             # LRU average baseline
+
+# Multi-parameter scan experiment
+parameters:
+  # # Number of users
+  # num_users:
+  #   key: "env.num_users"
+  #   # values: [20, 30, 50, 70, 100, 150]  # users
+  #   values: [40, 60, 80, 90]  # users
+
+  # # Number of edge servers
+  num_edges:
+    key: "env.num_edges"
+    values: [8, 10, 12, 15, 18, 20]  # servers
+
+  # # Number of model service instances
+  # services_per_model:
+  #   key: "service.services_per_model"
+  #   # values: [3, 5, 8, 10, 12, 15]  # instances/model
+  #   values: [2, 3, 4, 5, 6, 7]  # instances/model
+
+  # # Server storage capacity range
+  # server_storage:
+  #   key: "edge.storage_cap_range"
+  #   values:
+  #     - [1.8, 2.2]  # mean 2.0
+  #     - [2.3, 2.7]  # mean 2.5
+  #     - [2.8, 3.2]  # mean 3.0
+  #     - [3.3, 3.7]  # mean 3.5
+  #     - [3.8, 4.2]  # mean 4.0 (original mean group)
+  #     - [4.3, 4.7]  # mean 4.5
+  #     - [4.8, 5.2]  # mean 5.0
+
+  # # Server compute capacity range
+  # server_compute:
+  #   key: "edge.compute_cap_range"
+  #   values:
+  #     - [200, 400]    # mean 300
+  #     - [400, 700]    # mean 550
+  #     - [700, 1000]   # mean 850
+  #     - [1000, 1500]  # mean 1250 (original mean group)
+  #     - [1500, 2000]  # mean 1750
+  #     - [2000, 2500]  # mean 2250
+  #     - [2500, 3000]  # mean 2750
+
+  # # Server bandwidth range
+  # server_bandwidth:
+  #   key: "edge.bandwidth_MHz_range"
+  #   values:
+  #     - [25, 35]    # mean 30
+  #     - [40, 50]    # mean 45
+  #     - [55, 65]    # mean 60
+  #     - [70, 80]    # mean 75 (correct original mean)
+  #     - [85, 95]    # mean 90
+  #     - [100, 110]  # mean 105
+  #     - [115, 125]  # mean 120
+
+  # # Delay constraint
+  # delay_constraint:
+  #   key: "framework.latency_constraint_s"
+  #   values: [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0]  # original value 3.0 is fifth
+
+  # # User compute capacity range
+  # user_compute:
+  #   key: "user.compute_cap_range"
+  #   values:
+  #     - [10, 20]  # mean 15
+  #     - [20, 30]  # mean 25
+  #     - [30, 40]  # mean 35
+  #     - [40, 50]  # mean 45
+  #     - [50, 60]  # mean 55 (original mean group, fifth)
+  #     - [60, 70]  # mean 65
+  #     - [70, 80]  # mean 75
+
+  # # Energy and privacy weights (scan energy weight, fix privacy weight to default)
+  # energy_weight:
+  #   key: "weights.energy_weight"
+  #   values: [0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1.0, 2.0]
+
+  # # User input data size range
+  # input_size:
+  #   key: "user.input_size_range"
+  #   values:
+  #     - [1, 3]    # average 2
+  #     - [3, 5]    # average 4
+  #     - [5, 7]    # average 6
+  #     - [7, 9]    # average 8 (center point)
+  #     - [9, 11]   # average 10
+  #     - [11, 13]  # average 12
+  #     - [13, 15]  # average 14
+  #     - [15, 17]  # average 16
+
+
+# Fixed parameters (Note: scanned parameters should not be fixed here)
+fixed_params:
+  # env.num_users and env.num_edges are scanned above, not fixed here
+  # edge.compute_cap_range, edge.storage_cap_range, edge.bandwidth_MHz_range are scanned above
+  # framework.latency_constraint_s is scanned above
+  # service.services_per_model, user.compute_cap_range are scanned above
+
+  # Other fixed parameters
+  communication:
+    shadowing_stdev: 8.0                 # Shadowing standard deviation (dB)
+    reference_pathloss_db: 30.0          # Reference path loss (dB)
+    receiver_noise_figure_dB: 6.0        # Receiver noise figure (dB)
+    carrier_frequency_Hz: 3500000000     # Carrier frequency (3.5 GHz)
+
+  user:
+    zipf_param: 0.8                      # Zipf distribution parameter (exponent)
+    epsilon_range: [1e-11, 1e-9]         # Energy coefficient range (J/FLOP)
+    tx_power_dBm_range: [20.0, 30.0]     # User transmission power range (dBm)
+
+  weights:
+    deployment_hit_weight: 1.0           # Deployment hit reward weight (dimensionless)
+    deployment_migration_weight: 0.1     # Deployment migration penalty weight (dimensionless)
+
+# Results collection configuration
+results:
+  base_dir: "experiment_result"

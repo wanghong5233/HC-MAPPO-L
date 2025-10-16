@@ -1,0 +1,48 @@
+{
+    "name": "LeNet7",
+    "input_size_KB": 12.0,
+    "total_params_KB": 8567.289063,
+    "total_MFLOP": 40.733184,
+    "layers": [
+        {
+            "layer_name": "conv1",
+            "layer_type": "Conv2d",
+            "param_size": 3.5,
+            "feature_size": 128,
+            "MFLOP": 0.884736,
+            "privacy": 1.0
+        },
+        {
+            "layer_name": "conv2",
+            "layer_type": "Conv2d",
+            "param_size": 72.25,
+            "feature_size": 256,
+            "MFLOP": 18.874368,
+            "privacy": 0.999439158
+        },
+        {
+            "layer_name": "conv3",
+            "layer_type": "Conv2d",
+            "param_size": 288.5,
+            "feature_size": 128,
+            "MFLOP": 18.874368,
+            "privacy": 0.823166613
+        },
+        {
+            "layer_name": "fc1",
+            "layer_type": "Linear",
+            "param_size": 8193.0,
+            "feature_size": 1,
+            "MFLOP": 2.097152,
+            "privacy": 0.091860519
+        },
+        {
+            "layer_name": "fc2",
+            "layer_type": "Linear",
+            "param_size": 10.0390625,
+            "feature_size": 0.0390625,
+            "MFLOP": 0.00256,
+            "privacy": 0.0
+        }
+    ]
+}

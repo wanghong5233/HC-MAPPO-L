@@ -1,0 +1,99 @@
+# configs/system_config.yaml
+
+# ===================================================================
+# System Configuration for H-MAPPO-L Collaborative Edge Inference
+# Based on the research paper system model
+# ===================================================================
+
+env:
+  # Basic system parameters
+  num_users: 50              # K users (paper: K heterogeneous user devices)
+  num_edges: 10               # J edge servers (paper: J edge servers)
+  max_steps: 1000000            # Controls env reset: episode ends (done=True) and resets after this many steps
+  seed: 42                   # Random seed for reproducibility
+  fail_delay_multiplier: 1    # Multiplier for latency_constraint_s to calculate fail_delay
+  user_failure_penalty: 500.0    # Direct penalty for user agent if service request fails
+
+# Framework parameters (based on paper two-timescale design)
+framework:
+  deployment_update_interval: 10   # ΔT deployment update interval (paper: every ΔT slots)
+  latency_constraint_s: 3      # τ̄ latency constraint in seconds
+  user_model_cache: true       # Enable user-side model cache (LRU)
+
+# Service and model configuration
+service:
+  model_config_dir: "configs/model_configs"  # Directory containing model JSON files
+  services_per_model: 5                     # Number of service instances per base model
+
+# User device parameters (based on paper user model)
+user:
+  # Computational capabilities (in GFLOPS)
+  compute_cap_range: [10, 100]      # User computational capability range
+  
+  # Storage capacity (in GB) 
+  storage_cap_range: [1, 2]      # User storage capacity range
+  
+  # Energy parameters
+  epsilon_range: [1e-11, 1e-9]      # Energy coefficient ε (Joule/FLOP)
+  tx_power_dBm_range: [20.0, 30.0]   # User transmission power range
+  
+  # Privacy preferences (paper: Pre_k ∈ [0,1])
+  privacy_pref_range: [0.1, 0.9]     # Privacy preference range
+  
+  # Request generation parameters
+  zipf_param: 0.8                     # Zipf distribution parameter for service popularity
+  input_size_range: [1, 16]          # Input data size range (normalized units)
+
+# Edge server parameters (based on paper edge model)  
+edge:
+  # Computational resources (in GFLOPS)
+  compute_cap_range: [500, 2000]    # Edge server computational capability
+  
+  # Storage capacity (in GB)
+  storage_cap_range: [3, 5]   # Edge server storage capacity
+  
+  # Communication parameters
+  bandwidth_MHz_range: [50.0, 100.0]  # More conservative per-carrier bandwidth range. Original: [400.0, 800.0]
+  tx_power_dBm_range: [30.0, 43.0]   # Server transmission power range
+
+# Communication model parameters (Shannon's formula)
+communication:
+  # Channel model parameters
+  pathloss_exponent: 3.5              # Path loss exponent n
+  path_loss_reference_distance: 1.0    # Reference distance (meters) - standard reference
+  reference_pathloss_db: 30.0          # Reference path loss at 1m distance (more realistic)
+  shadowing_stdev: 8.0                 # Shadow fading standard deviation (dB)
+  
+  # Noise parameters  
+  receiver_noise_figure_dB: 6.0        # Receiver noise figure
+  min_link_rate_bps: 0                 # Disable hard floor; allow weak links to manifest. Original: 1e6
+  carrier_frequency_Hz: 3.5e9          # Carrier frequency (3.5 GHz for 5G)
+  
+  # Spatial parameters
+  area_width: 1000.0                     # Simulation area width (meters)
+  area_height: 1000.0                    # Simulation area height (meters)
+  min_coord_distance: 0.1              # Minimum coordinate distance to avoid log(0) (meters)
+  server_placement: "grid"           # Server placement: "grid" or "random"
+  user_placement: "random"             # User placement: "random", "grid", or "clustered"
+  
+  # Cloud-to-edge parameters
+  R_C2E_range: [200e6, 500e6]         # Cloud-to-edge download rate range (bps)
+
+# Privacy cost model parameters (paper: C_k^privacy(t))
+privacy:
+  # Linearly map Pre∈[0.1,0.9] to coefficient range [0.5, 2.0]
+  # Solved to alpha1=0.3125, alpha2=1.875
+  alpha1: 0.3125                       # Baseline privacy coeff α₁
+  alpha2: 1.875                        # Privacy preference coeff α₂
+  # Scale privacy cost to be on the same order of magnitude as energy cost
+  scale: 0.01                          # β, adjust as needed
+
+# Weight coefficients for cost function (paper: μ₁, μ₂)
+weights:
+  privacy_weight: 5.0                  # μ₁ privacy cost weight
+  energy_weight: 5.0                   # μ₂ energy cost weight
+  delay_weight: 0.1                    # μ₃ delay violation penalty weight (for user reward shaping)
+  deployment_hit_weight: 1.0           # Deployment hit reward weight
+  deployment_migration_weight: 0.1     # Deployment migration cost weight
+
+

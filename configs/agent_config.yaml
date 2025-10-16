@@ -1,0 +1,83 @@
+# configs/agent_config.yaml
+
+# ===================================================================
+# Agent and Algorithm Hyperparameters for H-MAPPO-L
+# ===================================================================
+
+agent:
+  # =============================
+  # Algorithm Selection (Global)
+  # =============================
+  use_mappo: true        # Whether to use MAPPO (user layer only). Deployment layer is always PPO (auto-regressive); allocation layer is SAC.
+  
+  # =============================
+  # PPO Common Hyperparameters (User/Deployment Layers) (Not used by SAC)
+  # =============================
+  learning_rate: 3.0e-4   # PPO optimizer learning rate (shared by user/deployment layers)
+  gamma: 0.99             # Discount factor (PPO)
+  gae_lambda: 0.95        # Lambda for GAE (PPO)
+  
+  # PPO Objective/Regularization & Numerical Stability (User/Deployment Layers only)
+  clip_coef: 0.2          # PPO clip coefficient
+  ent_coef: 0.05          # Entropy coefficient (encourages exploration)
+  vf_coef: 0.5            # Value function loss coefficient
+  cost_vf_coef: 0.5       # Cost value function loss coefficient (Lagrangian)
+  max_grad_norm: 0.5      # Gradient clipping threshold
+
+  # =============================
+  # Deployment Policy Specific (PPO-Deployment Actor related)
+  # =============================
+  deploy_ent_coef: 0.25     # Higher entropy coefficient for deployment policy to encourage exploration
+  sampling_temperature: 1.5 # Sampling temperature, >1 increases randomness
+  size_bias_beta: 0.1       # Model size bias coefficient, >0 favors sampling smaller models
+  
+  # =============================
+  # SAC Hyperparameters (Allocation Layer only)
+  # =============================
+  sac_buffer_size: 3000   # Replay buffer size for allocation layer (in transitions).
+  sac_lr: 3.0e-4          # SAC learning rate
+  sac_alpha: 0.2          # SAC entropy regularization coefficient
+  sac_tau: 0.005          # SAC soft update coefficient
+  sac_batch_size: 256     # Number of samples per SAC update (sampled from replay buffer).
+  sac_updates_per_epoch: 8  # Number of extra SAC updates per training epoch (orthogonal to PPO's num_epochs).
+  sac_target_entropy_ratio: 0.7  # Target entropy for automatic temperature adjustment.
+  
+  # =============================
+  # Circular Buffer Configuration (Global)
+  # =============================
+  use_replay_buffers: true         # Use circular buffers (true=keep history, train on full current buffer; false=use only the latest batch)
+  
+  # User Layer Circular Buffer
+  user_buffer_capacity: 200        # User layer circular buffer capacity (in timesteps). Total transitions = capacity * num_users.
+  
+  # Deployment Layer Circular Buffer
+  deployment_buffer_capacity: 200   # Deployment layer circular buffer capacity (in number of deployment decisions).
+  
+  # =============================
+  # Lagrangian (User Layer Constraint)
+  # =============================
+  lagrangian_lr: 0.01    # Learning rate for Lagrangian multiplier update
+  
+  # =============================
+  # Training Loop Parameters (Collection & PPO Optimization)
+  # =============================
+  num_steps: 100         # Number of steps to collect per iteration.
+  total_timesteps: 1000000 # Total training timesteps.
+  num_epochs: 3          # Number of PPO epochs (user/deployment): passes over all samples in the current buffer.
+  num_minibatches: 8     # Number of PPO minibatches (user/deployment): data is split into minibatches for updates.
+  
+  # Network architecture parameters
+  user_hidden_dim: 256    # Hidden dimension for user policy network
+  alloc_hidden_dim: 128   # Hidden dimension for allocation policy network
+  deploy_hidden_dim: 256  # Hidden dimension for deployment policy network
+  deploy_embed_dim: 32    # Embedding dimension for deployment policy
+  
+  # Allocation policy specific parameters
+  use_pure_attention: false # Use pure variable-length attention (true) or vectorized masked attention (false)
+
+  # Embedding dimensions for neural network features
+  embedding:
+    service_id_dim: 32
+    input_size_dim: 32
+    split_point_dim: 32
+    user_id_dim: 32 
