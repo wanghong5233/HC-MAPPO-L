@@ -4,7 +4,7 @@ Official code repository for the paper: **"Hierarchical Multi-Agent Reinforcemen
 
 ## Overview
 
-This repository provides a simulation framework for collaborative edge inference in mobile edge computing (MEC) systems. The framework implements a hierarchical multi-agent reinforcement learning approach that jointly optimizes service deployment, model partitioning, and resource allocation under privacy and energy constraints.
+This repository provides a simulation framework for collaborative edge inference in mobile edge computing (MEC) systems. The framework implements a hierarchical multi-agent reinforcement learning approach that jointly optimizes service deployment, model partitioning, and resource allocation under privacy and energy constraints. The emphasis on privacy is motivated by threats like model inversion attacks. For a practical demonstration of this threat, see our accompanying repository: [Deep-Inversion-Attack](https://github.com/wanghong5233/Deep-Inversion-Attack).
 
 ## Key Features
 
@@ -23,7 +23,7 @@ This repository provides a simulation framework for collaborative edge inference
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/HC-MAPPO-L.git
+git clone https://github.com/wanghong5233/HC-MAPPO-L.git
 cd HC-MAPPO-L
 
 # Install dependencies
