@@ -10,7 +10,7 @@ Our approach co-optimizes model deployment, user-server association, privacy-awa
 
 ## Key Features
 
-- **Three-Layer Hierarchical Architecture**: Decomposes the complex problem into three complementary decision layers: (i) a long-timescale deployment layer, (ii) a short-timescale association–partitioning layer, and (iii) a short-timescale resource allocation layer.
+- **Three-Layer Hierarchical Architecture**: Decomposes the complex problem into three complementary decision layers: (i) a deployment layer, (ii) an association–partitioning layer, and (iii) a resource allocation layer.
 - **Safe MARL Framework**: Integrates adaptive Lagrangian dual updates into the MAPPO algorithm (HC-MAPPO-L) to rigorously enforce long-term Quality of Service (QoS) guarantees.
 - **Advanced Policy Networks**: Employs an auto-regressive policy to handle the combinatorial action space of model deployment and an attention-based policy for dynamic, query-based resource allocation.
 - **Comprehensive Joint Optimization**: Systematically co-optimizes the interdependent decisions of model caching, user association, model partitioning, and resource management under stringent constraints.
